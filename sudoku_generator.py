@@ -135,7 +135,7 @@ class SudokuGenerator:
     def fill_box(self, row_start, col_start):
         uib=[1,2,3,4,5,6,7,8,9]
         for i in range(row_start, row_start+3):
-            for j in range(col_start, col_start+):
+            for j in range(col_start, col_start+3):
                 num = random.choice(uib)
                 while True:
                     if self.board.valid_in_box(row_start, col_start, num) and self.board.is_valid(row_start, col_start, num) == True:
