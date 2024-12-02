@@ -1,4 +1,5 @@
 import math,random
+from os.path import isabs
 
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
@@ -100,8 +101,8 @@ class SudokuGenerator:
         for i in range(row_start, row_start+3):
             for j in range(col_start, col_start+3):
                 if num == self.board[i][j]:
-                    return False
-        return True
+                    return True
+        return False
     
     '''
     Determines if it is valid to enter num at (row, col) in the board
@@ -114,8 +115,12 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        if self.board[row][col] == num:
-            return False
+        for i in range(9):
+            if num == self.board[row][i]:
+                return False
+        for i in range(9):
+            if num == self.board[i][col]:
+                return False
         return True
 
     '''
@@ -129,7 +134,13 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        pass
+        uib=[1,2,3,4,5,6,7,8,9]
+        for i in range(row_start, row_start+2):
+            for j in range(col_start, col_start+2):
+                if self.board.is_valid(i, j, ):
+                    self.board[i][j]=uib[random.randint(0,9)]
+                num = random.choice(uib)
+                if self.board.
     
     '''
     Fills the three boxes along the main diagonal of the board
@@ -139,7 +150,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        pass
+
 
     '''
     DO NOT CHANGE
