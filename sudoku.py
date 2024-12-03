@@ -48,16 +48,22 @@ def draw_board(screen): #assumes that the board is (720, 800)
         else:
             pygame.draw.line(screen, "gray", (80 * col, 0), (80 * col, 720))
 def draw_win_screen(screen):
-    screen.fill("red")
+    screen.fill("light green")
     win_font = pygame.font.Font(None, 100)
-    exit_font = pygame.font.Font(None, 50)
-
     win_surface = win_font.render("Game Won!", True, "Black")
     win_rectangle = win_surface.get_rect(center=(720 / 2, 800 / 2 - 250))
     screen.blit(win_surface, win_rectangle)
 
+    exit_font = pygame.font.Font(None, 50)
+    exit_text = exit_font.render("EXIT", True, "white")
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    easy_surface.fill("Orange")
+    easy_surface.blit(easy_text, (10, 10))
+    easy_surface_rectangle = easy_surface.get_rect(center=(720 / 4, 800 / 2))
+    screen.blit(easy_surface, easy_surface_rectangle)
+
 def draw_over_screen(screen):
-    screen.fill("blue")
+    screen.fill("light red")
     over_font = pygame.font.Font(None, 100)
     exit_font = pygame.font.Font(None, 50)
 
