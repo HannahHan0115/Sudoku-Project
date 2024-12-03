@@ -1,11 +1,42 @@
 import math,random
 from os.path import isabs
+import pygame
 
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
 https://www.geeksforgeeks.org/program-sudoku-generator/
 
 """
+
+class Cell:
+    def __init__(self, value, row, col, screen):
+        self.value = value
+        self.row = row
+        self.col = col
+        self.screen = screen
+
+    def set_cell_value(self, value):
+        self.value = value
+
+    def set_sketched_value(self, value):
+        self.value = value
+
+    def draw(self):
+	    
+
+class Board:
+    def __init__(self, width, height, screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.grid = [[Cell(self.board[row][col], row, col, screen) for col in range(self.width)] for row in
+                            range(self.height)]
+        self.selected_cell = None
+
+    def draw(self):
+        cell_size = 60
+	    
 
 class SudokuGenerator:
     '''
