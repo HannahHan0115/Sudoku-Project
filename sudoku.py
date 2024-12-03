@@ -9,6 +9,8 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    print(event.pos)
             screen.fill("light blue")
             for row in range(0,9):
                 if row%3==0:
