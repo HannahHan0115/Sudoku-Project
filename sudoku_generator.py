@@ -51,8 +51,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         self.board=SudokuGenerator()
-        self.grid = [[Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in
-                            range(9)]
+        self.grid = [[Cell(0,i,j,screen) for col in range(9)] for row in range(9)]
         self.selected_cell = None
 
     def draw(self):
