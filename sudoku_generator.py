@@ -14,6 +14,11 @@ class Cell:
         self.row = row
         self.col = col
         self.screen = screen
+        self.sketch_value = 0
+        self.selected = False
+        self.font = pygame.font.Font(None, 40)
+        self.width = 80
+        self.height = 80
 
     def set_cell_value(self, value):
         self.value = value
@@ -22,7 +27,22 @@ class Cell:
         self.value = value
 
     def draw(self):
-	    
+        x=(self.col-0.5)*self.width
+        y=(self.row-0.5)*self.height
+
+        if self.selected:
+            pygame.draw.rect(self.screen,(255,0,0),(x,y,self.width,self.height),5)
+
+        if self.value!=0:
+            self.font=pygame.font.Font(None,40)
+            cell_content=self.font.render(str(self.value),1,(0,0,0))
+            cell_rectangle = cell_content.get_rect(center= (x,y))
+            self.screen.blit(cell_content,cell_rectangle)
+        if self.sketch_value!=0:
+            self.font=pygame.font.Font(None, 20)
+            cell_content=self.font.render(str(self.sketch_value),1,(128,128,128))
+            cell_rectangle=cell_content.get_rect(center=(x-0.25*self.width,y-0.25*self.height))
+            self.screen.blit(cell_content,cell_rectangle)
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -30,13 +50,13 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
-        self.grid = [[Cell(self.board[row][col], row, col, screen) for col in range(self.width)] for row in
-                            range(self.height)]
+        self.board=SudokuGenerator()
+        self.grid = [[Cell(self.board[row][col], row, col, screen) for col in range(9)] for row in
+                            range(9)]
         self.selected_cell = None
 
     def draw(self):
         cell_size = 60
-	    
 
 class SudokuGenerator:
     '''
