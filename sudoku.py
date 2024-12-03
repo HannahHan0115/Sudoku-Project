@@ -3,7 +3,7 @@ import pygame
 def main():
     try:
         pygame.init()
-        screen = pygame.display.set_mode((900, 1000))
+        screen = pygame.display.set_mode((900, 1000))#this is toooooo high, when i open the game it gets out of the screen
         running = True
         while running:
             for event in pygame.event.get():
