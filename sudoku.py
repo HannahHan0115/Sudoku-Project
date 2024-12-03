@@ -14,12 +14,12 @@ def main():
                 if row%3==0:
                     pygame.draw.line(screen, "black", (0, 100*row), (900, 100*row) )
                 else:
-                    pygame.draw.line(screen, "gray", (0, 100 * row), (900, 100 * row))
-            for row in range(0,9):
-                if row%3==0:
-                    pygame.draw.line(screen, "black", (0, 100*row), (900, 100*row) )
+                    pygame.draw.line(screen, "gray", (0, 100*row), (900, 100*row))
+            for col in range(0,9):
+                if col%3==0:
+                    pygame.draw.line(screen, "black", (100*col, 0), (100*col, 900) )
                 else:
-                    pygame.draw.line(screen, "gray", (0, 100 * row), (900, 100 * row))
+                    pygame.draw.line(screen, "gray", (100*col, 0), (100*col, 900))
             pygame.display.update()
     finally:
         pygame.quit()
