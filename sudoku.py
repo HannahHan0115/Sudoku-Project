@@ -1,6 +1,6 @@
 import pygame
 
-import sudoku_generator
+#import sudoku_generator
 
 
 def draw_start_screen(screen):
@@ -38,7 +38,8 @@ def draw_start_screen(screen):
     hard_surface.blit(hard_text, (10, 10))
     hard_surface_rectangle = hard_surface.get_rect(center=(720/4*3, 800/2))
     screen.blit(hard_surface, hard_surface_rectangle)
-def draw_board(screen, board): #assumes that the board is (720, 800)
+
+def draw_board(screen): #assumes that the board is (720, 800)
     screen.fill("light yellow")
     for row in range(0, 10):
         if row % 3 == 0:
@@ -90,7 +91,7 @@ def draw_win_screen(screen):
     exit_surface.blit(exit_text, (10, 10))
     easy_surface_rectangle = exit_surface.get_rect(center=(720 / 2, 800 / 2))
     screen.blit(exit_surface, easy_surface_rectangle)
-    print(exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20)
+    #print(exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20)
 def draw_lose_screen(screen):
     screen.fill("crimson")
     lose_font = pygame.font.Font(None, 100)
@@ -117,29 +118,39 @@ def main():
         easy_button_rect = pygame.Rect(720/4-58, 800/2-27, 116,54)
         medium_button_rect = pygame.Rect(720 / 2 - 79, 800 / 2 - 27, 158, 54)
         hard_button_rect = pygame.Rect(720 / 4*3 - 61, 800 / 2 - 27, 122, 54)
-        reset_button_rect = pygame.Rect(720 / 4 - 58, 800 / 2 - 27, 116, 54)
-        restart_button_rect = pygame.Rect(720 / 2 - 79, 800 / 2 - 27, 158, 54)
-        exit_button_rect = pygame.Rect(720 / 4 * 3 - 61, 800 / 2 - 27, 122, 54)
+        reset_button_rect = pygame.Rect(200-42.5, 800 / 2 - 27, 85, 40)
+        restart_button_rect = pygame.Rect(360-55, 800 / 2 - 27, 110, 40)
+        exit_button_rect = pygame.Rect(520-39.5, 800 / 2 - 27, 69, 40)
         #reset_button_rect
         #board_restart_button_rect
         #board_exit_button_rect
         win_exit_button_rect = pygame.Rect(720 / 2-52, 800 / 2-27, 104, 54)
         lose_restart_button_rect = pygame.Rect(720 / 2-90, 800 / 2-27, 180, 54)
-
-
+        stage=0
+        draw_board(screen)
         while running:
             draw_start_screen(screen)
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if easy_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                        board = sudoku_generator.generate_sudoku(9, 30)
-                    if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                        board = sudoku_generator.generate_sudoku(9, 40)
-                    if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                        board = sudoku_generator.generate_sudoku(9, 50)
+                if stage==0:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if easy_button_rect.collidepoint(event.pos):  # Check if clicked inside button
+                            #board = sudoku_generator.generate_sudoku(9, 30)
+                            for i in range(9):
+                                for j in range(9):
+                                    print(board[i][j], end='')
+                                print()
+                                stage=1
+                        if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
+                            #board = sudoku_generator.generate_sudoku(9, 40)
+                            stage=1
+                        if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
+                            #board = sudoku_generator.generate_sudoku(9, 50)
+                            stage=1
+                if stage==1:
+                    draw_board(screen)
 
 
     finally:
