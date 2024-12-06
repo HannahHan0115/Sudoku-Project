@@ -1,6 +1,5 @@
 import pygame
-
-#import sudoku_generator
+import sudoku_generator
 
 
 def draw_start_screen(screen):
@@ -74,9 +73,9 @@ def draw_board(screen): #assumes that the board is (720, 800)
     exit_surface.blit(exit_text, (10, 10))
     exit_surface_rectangle = exit_surface.get_rect(center=(520, 760))
     screen.blit(exit_surface, exit_surface_rectangle)
-    print(reset_text.get_size()[0] + 20, reset_text.get_size()[1] + 20)
-    print(restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20)
-    print(exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20)
+
+
+
 def draw_win_screen(screen):
     screen.fill("light green")
     win_font = pygame.font.Font(None, 100)
@@ -106,7 +105,7 @@ def draw_lose_screen(screen):
     restart_surface.blit(restart_text, (10, 10))
     easy_surface_rectangle = restart_surface.get_rect(center=(720 / 2, 800 / 2))
     screen.blit(restart_surface, easy_surface_rectangle)
-    print(restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20)
+    #print(restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20)
 
 
 def main():
@@ -118,40 +117,62 @@ def main():
         easy_button_rect = pygame.Rect(720/4-58, 800/2-27, 116,54)
         medium_button_rect = pygame.Rect(720 / 2 - 79, 800 / 2 - 27, 158, 54)
         hard_button_rect = pygame.Rect(720 / 4*3 - 61, 800 / 2 - 27, 122, 54)
-        reset_button_rect = pygame.Rect(200-42.5, 800 / 2 - 27, 85, 40)
-        restart_button_rect = pygame.Rect(360-55, 800 / 2 - 27, 110, 40)
-        exit_button_rect = pygame.Rect(520-39.5, 800 / 2 - 27, 69, 40)
-        #reset_button_rect
-        #board_restart_button_rect
-        #board_exit_button_rect
+        reset_button_rect = pygame.Rect(200-42.5, 740, 85, 40)
+        restart_button_rect = pygame.Rect(360-55, 740, 110, 40)
+        exit_button_rect = pygame.Rect(520-39.5, 740, 69, 40)
         win_exit_button_rect = pygame.Rect(720 / 2-52, 800 / 2-27, 104, 54)
         lose_restart_button_rect = pygame.Rect(720 / 2-90, 800 / 2-27, 180, 54)
         stage=0
-        draw_board(screen)
+        #draw_lose_screen(screen)
+
         while running:
-            draw_start_screen(screen)
-            pygame.display.update()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                if stage==0:
+                if stage==0:#game start screen
+                    draw_start_screen(screen)
+                    pygame.display.update()
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if easy_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            #board = sudoku_generator.generate_sudoku(9, 30)
-                            for i in range(9):
-                                for j in range(9):
-                                    print(board[i][j], end='')
-                                print()
-                                stage=1
+                            board = sudoku_generator.generate_sudoku(9, 30)
+                                #stage=1
+                            stage = 1#enter the actuall game screen
                         if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            #board = sudoku_generator.generate_sudoku(9, 40)
+                            board = sudoku_generator.generate_sudoku(9, 40)
                             stage=1
                         if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
                             #board = sudoku_generator.generate_sudoku(9, 50)
                             stage=1
                 if stage==1:
+                    pygame.display.update()
                     draw_board(screen)
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if reset_button_rect.collidepoint(event.pos):
+                            #print('reset')
+                            stage=5#it's a test
+                            continue
+                        if restart_button_rect.collidepoint(event.pos):
+                            #print('restart')
+                            stage=0
+                            pygame.display.update()
+                        if exit_button_rect.collidepoint(event.pos):
+                            #print('exit')
+                            pygame.quit()
 
+                if stage == 4:#success
+                    pygame.display.update()
+                    draw_win_screen(screen)
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if win_exit_button_rect.collidepoint(event.pos):
+                            pygame.quit()
+
+                if stage == 5:#failed
+                    pygame.display.update()
+                    draw_lose_screen(screen)
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if lose_restart_button_rect.collidepoint(event.pos):
+                            stage=0
+                            pygame.display.update()
 
     finally:
         pygame.quit()

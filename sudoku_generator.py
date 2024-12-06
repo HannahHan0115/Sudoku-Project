@@ -82,7 +82,7 @@ class SudokuGenerator:
         self.removed_cells = removed_cells
         self.board = [[0 for _ in range(9)] for _ in range(9)]
         self.box_length = 3
-
+        self.solved_board = [[0 for _ in range(9)] for _ in range(9)]
     '''
 	Returns a 2D python list of numbers which represents the board
 
@@ -199,16 +199,13 @@ class SudokuGenerator:
     '''
 
     def fill_box(self, row_start, col_start):
-
         for i in range(row_start, row_start + 3):
             for j in range(col_start, col_start + 3):
-                num = random.randint(1, 9)
-                if self.valid_in_box(row_start, col_start, num) == True:
-                    self.board[i][j] = num
-        for i in range(9):
-            for j in range(9):
-                print(self.board[i][j], end="")
-            print()
+                while True:
+                    num = random.randint(1, 9)
+                    if self.valid_in_box(row_start, col_start, num):
+                        self.board[i][j] = num
+                        break
 
     '''
     Fills the three boxes along the main diagonal of the board
@@ -299,8 +296,6 @@ class SudokuGenerator:
                 self.board[row][col] = 0
                 removed[row][col] = 1
                 counter += 1
-            else:
-                i = i - 1
 
 
 '''
