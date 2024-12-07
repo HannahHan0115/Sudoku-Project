@@ -249,6 +249,7 @@ def main():
                                     board[selected_r][selected_c] = sb[selected_r][selected_c]
                                     sb[selected_r][selected_c] = 0
                                     pygame.display.update()
+                                    continue
 
                             if event.key == pygame.K_BACKSPACE and ifresetboard[selected_r][selected_c] == 0 and board[selected_r][selected_c] != 0:
                                 pygame.draw.rect(screen, "Light yellow", (selected_r*80, selected_c*80, 80, 80))
