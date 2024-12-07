@@ -7,8 +7,7 @@ This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by 
 https://www.geeksforgeeks.org/program-sudoku-generator/
 
 """
-
-
+'''
 class Cell:
     def __init__(self, value, row, col, screen):
         self.value = value
@@ -54,12 +53,13 @@ class Board:
         self.difficulty = difficulty
         self.board = SudokuGenerator()
         self.grid = [[Cell(0, i, j, screen) for j in range(9)] for i in range(9)]
-        self.selected_cell = None
+        #self.selected_cell = None
+        #self.selected.
 
     def draw(self):
         cell_size = 60
 
-
+'''
 class SudokuGenerator:
     '''
 	create a sudoku board - initialize class variables and set up the 2D board

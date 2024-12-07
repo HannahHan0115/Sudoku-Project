@@ -7,7 +7,7 @@ class Cell:
         self.screen=screen
         self.sketch_value=0
         self.selected=False
-        self.font=pygame.font.SysFont('comicsans',40)
+        self.font=pygame.font.SysFont(None,40)
         self.width=50
         self.height=50
 

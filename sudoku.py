@@ -1,6 +1,7 @@
 import pygame
 import sudoku_generator
-
+import Cell
+import Board
 
 def draw_start_screen(screen):
     screen.fill("white")
@@ -38,7 +39,7 @@ def draw_start_screen(screen):
     hard_surface_rectangle = hard_surface.get_rect(center=(720/4*3, 800/2))
     screen.blit(hard_surface, hard_surface_rectangle)
 
-def draw_board(screen): #assumes that the board is (720, 800)
+def draw_board(screen, board): #assumes that the board is (720, 800)
     screen.fill("light yellow")
     for row in range(0, 10):
         if row % 3 == 0:
@@ -74,7 +75,13 @@ def draw_board(screen): #assumes that the board is (720, 800)
     exit_surface_rectangle = exit_surface.get_rect(center=(520, 760))
     screen.blit(exit_surface, exit_surface_rectangle)
 
-
+    for i in range(9):
+        for j in range(9):
+            if board[i][j] != 0:
+                value_font = pygame.font.Font(None, 50)
+                value_surface = value_font.render(str(board[i][j]), True, "Black")
+                value_rectangle = value_surface.get_rect(center=(40+i*80, 40+j*80))
+                screen.blit(value_surface, value_rectangle)
 
 def draw_win_screen(screen):
     screen.fill("light green")
@@ -106,7 +113,12 @@ def draw_lose_screen(screen):
     easy_surface_rectangle = restart_surface.get_rect(center=(720 / 2, 800 / 2))
     screen.blit(restart_surface, easy_surface_rectangle)
     #print(restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20)
-
+def draw_outline(row, col, screen):
+    pygame.draw.rect(screen, "Red", (row*80, col*80, 80, 80), 5)
+    pygame.display.update()
+def remove_outline(row, col, screen):
+    pygame.draw.rect(screen, "Grey", (row * 80, col * 80, 80, 80), 1)
+    pygame.display.update()
 
 def main():
     try:
@@ -135,17 +147,17 @@ def main():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if easy_button_rect.collidepoint(event.pos):  # Check if clicked inside button
                             board = sudoku_generator.generate_sudoku(9, 30)
-                                #stage=1
-                            stage = 1#enter the actuall game screen
+                            #stage=1
+                            stage = 1#enter the actual game screen
                         if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
                             board = sudoku_generator.generate_sudoku(9, 40)
                             stage=1
                         if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            #board = sudoku_generator.generate_sudoku(9, 50)
+                            board = sudoku_generator.generate_sudoku(9, 50)
                             stage=1
                 if stage==1:
+                    draw_board(screen, board)
                     pygame.display.update()
-                    draw_board(screen)
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if reset_button_rect.collidepoint(event.pos):
                             #print('reset')
@@ -158,6 +170,14 @@ def main():
                         if exit_button_rect.collidepoint(event.pos):
                             #print('exit')
                             pygame.quit()
+                        if event.pos[0] <= 720 and event.pos[1] <= 720:
+                            x = event.pos[0]
+                            y = event.pos[1]
+                            value = board[x // 80][y // 80]
+                            draw_outline(x // 80, y // 80, screen)
+                            stage = 6
+                            continue
+                            # print(event.pos[0]//80,event.pos[1]//80)#the cell it clicking
 
                 if stage == 4:#success
                     pygame.display.update()
@@ -173,11 +193,36 @@ def main():
                         if lose_restart_button_rect.collidepoint(event.pos):
                             stage=0
                             pygame.display.update()
+                if stage == 6: #selecting a cell
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if reset_button_rect.collidepoint(event.pos):
+                            # print('reset')
+                            stage = 5  # it's a test
+                            continue
+                        if restart_button_rect.collidepoint(event.pos):
+                            # print('restart')
+                            stage = 0
+                            pygame.display.update()
+                        if exit_button_rect.collidepoint(event.pos):
+                            # print('exit')
+                            pygame.quit()
+                        remove_outline(x//80, y//80, screen)
+                        x = event.pos[0]
+                        y = event.pos[1]
+                        value = board[x // 80][y // 80]
+                        draw_outline(x // 80, y // 80, screen)
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT:
+                            print()
+                        if event.key == pygame.K_RIGHT:
+                            print()
+                        if event.key == pygame.K_UP:
+                            print()
+                        if event.key == pygame.K_DOWN:
+                            print()
 
     finally:
         pygame.quit()
-
-
 
 if __name__ == "__main__":
     main()

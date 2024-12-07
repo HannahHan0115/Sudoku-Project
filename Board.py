@@ -1,6 +1,6 @@
 import pygame
 from Cell import Cell
-import numpy as np
+#import numpy as np
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -10,6 +10,8 @@ class Board:
         self.difficulty = difficulty
         self.cells = [[Cell(0, i, j, screen) for j in range(9)] for i in range(9)]
         self.selected = None
+        self.selected_row=None
+        self.selected_col=None
 
     def draw(self):
         # Draw Sudoku grid outline
