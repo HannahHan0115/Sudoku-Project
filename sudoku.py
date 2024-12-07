@@ -1,5 +1,6 @@
 import pygame
 import sudoku_generator
+from sudoku_generator import SudokuGenerator
 import Cell
 import Board
 
@@ -116,9 +117,18 @@ def draw_lose_screen(screen):
 def draw_outline(row, col, screen):
     pygame.draw.rect(screen, "Red", (row*80, col*80, 80, 80), 5)
     pygame.display.update()
-def remove_outline(row, col, screen):
-    pygame.draw.rect(screen, "Grey", (row * 80, col * 80, 80, 80), 1)
-    pygame.display.update()
+
+def generate_sudoku(size, removed):
+    sudoku = sudoku_generator.SudokuGenerator(size, removed)
+    sudoku.fill_values()
+    board = sudoku.get_board()
+    ans_board = [[0 for _ in range(9)] for _ in range(9)]
+    for i in range(9):
+        for j in range(9):
+            ans_board[i][j]=board[i][j]
+    sudoku.remove_cells()
+    board = sudoku.get_board()
+    return ans_board, board
 
 def main():
     try:
@@ -136,7 +146,8 @@ def main():
         lose_restart_button_rect = pygame.Rect(720 / 2-90, 800 / 2-27, 180, 54)
         stage=0
         #draw_lose_screen(screen)
-
+        selected_c=75
+        selected_r=75
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -146,22 +157,130 @@ def main():
                     pygame.display.update()
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if easy_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            board = sudoku_generator.generate_sudoku(9, 30)
-                            #stage=1
+                            ans_board,board= generate_sudoku(9, 30)
+                            ifresetboard = [[0 for _ in range(9)] for _ in range(9)]
+                            for i in range(9):
+                                for j in range(9):
+                                    ifresetboard[i][j] = board[i][j]
+                            #print(ans_board)
                             stage = 1#enter the actual game screen
                         if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            board = sudoku_generator.generate_sudoku(9, 40)
+                            ans_board, board = sudoku_generator.generate_sudoku(9, 40)
+                            ifresetboard = [[0 for _ in range(9)] for _ in range(9)]
+                            for i in range(9):
+                                for j in range(9):
+                                    ifresetboard[i][j] = board[i][j]
                             stage=1
                         if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            board = sudoku_generator.generate_sudoku(9, 50)
+                            ans_board, board = sudoku_generator.generate_sudoku(9, 50)
+                            ifresetboard = [[0 for _ in range(9)] for _ in range(9)]
+                            for i in range(9):
+                                for j in range(9):
+                                    ifresetboard[i][j] = board[i][j]
                             stage=1
                 if stage==1:
+                    if selected_r!=75:
+                        draw_outline(selected_r, selected_c, screen)
                     draw_board(screen, board)
-                    pygame.display.update()
+                    #pygame.display.update()
+                    if selected_c!=75:
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_LEFT:
+                                selected_r=selected_r-1
+                                pygame.display.update()
+                                continue
+                            if event.key == pygame.K_RIGHT:
+                                selected_r=selected_r+1
+                                pygame.display.update()
+                                continue
+                            if event.key == pygame.K_UP:
+                                selected_c=selected_c-1
+                                pygame.display.update()
+                                continue
+                            if event.key == pygame.K_DOWN:
+                                selected_c=selected_c+1
+                                pygame.display.update()
+                                continue
+                            if event.key == pygame.K_1 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=1
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_2 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=2
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_3 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=3
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_4 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=4
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_5 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=5
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_6 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=6
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_7 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=7
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_8 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=8
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_9 and board[selected_r][selected_c] == 0:
+                                board[selected_r][selected_c]=9
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
+                                pygame.display.update()
+                            if event.key == pygame.K_RETURN:
+                                if board[selected_r][selected_c] != 0:
+                                    if board == ans_board:
+                                        stage = 4
+                                    else:
+                                        stage = 5
+                                    pygame.display.update()
+                                    continue
+
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if reset_button_rect.collidepoint(event.pos):
                             #print('reset')
-                            stage=5#it's a test
+                            #stage=5#it's a test
+                            stage=1
+                            print(ifresetboard)
+                            board=ifresetboard
+                            pygame.display.update()
                             continue
                         if restart_button_rect.collidepoint(event.pos):
                             #print('restart')
@@ -173,11 +292,15 @@ def main():
                         if event.pos[0] <= 720 and event.pos[1] <= 720:
                             x = event.pos[0]
                             y = event.pos[1]
-                            value = board[x // 80][y // 80]
-                            draw_outline(x // 80, y // 80, screen)
-                            stage = 6
+                            selected_r = x//80
+                            selected_c = y//80
+                            #value = board[row][col]
+                            #draw_outline(row, col, screen)
+                            #stage = 6
+                            pygame.display.update()
                             continue
                             # print(event.pos[0]//80,event.pos[1]//80)#the cell it clicking
+
 
                 if stage == 4:#success
                     pygame.display.update()
@@ -193,34 +316,6 @@ def main():
                         if lose_restart_button_rect.collidepoint(event.pos):
                             stage=0
                             pygame.display.update()
-                if stage == 6: #selecting a cell
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if reset_button_rect.collidepoint(event.pos):
-                            # print('reset')
-                            stage = 5  # it's a test
-                            continue
-                        if restart_button_rect.collidepoint(event.pos):
-                            # print('restart')
-                            stage = 0
-                            pygame.display.update()
-                        if exit_button_rect.collidepoint(event.pos):
-                            # print('exit')
-                            pygame.quit()
-                        remove_outline(x//80, y//80, screen)
-                        x = event.pos[0]
-                        y = event.pos[1]
-                        value = board[x // 80][y // 80]
-                        draw_outline(x // 80, y // 80, screen)
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_LEFT:
-                            print()
-                        if event.key == pygame.K_RIGHT:
-                            print()
-                        if event.key == pygame.K_UP:
-                            print()
-                        if event.key == pygame.K_DOWN:
-                            print()
-
     finally:
         pygame.quit()
 

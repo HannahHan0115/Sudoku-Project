@@ -7,59 +7,6 @@ This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by 
 https://www.geeksforgeeks.org/program-sudoku-generator/
 
 """
-'''
-class Cell:
-    def __init__(self, value, row, col, screen):
-        self.value = value
-        self.row = row
-        self.col = col
-        self.screen = screen
-        self.sketch_value = 0
-        self.selected = False
-        self.font = pygame.font.Font(None, 40)
-        self.width = 80
-        self.height = 80
-
-    def set_cell_value(self, value):
-        self.value = value
-
-    def set_sketched_value(self, value):
-        self.value = value
-
-    def draw(self):
-        x = (self.col - 0.5) * self.width
-        y = (self.row - 0.5) * self.height
-
-        if self.selected:
-            pygame.draw.rect(self.screen, (255, 0, 0), (x, y, self.width, self.height), 5)
-
-        if self.value != 0:
-            self.font = pygame.font.Font(None, 40)
-            cell_content = self.font.render(str(self.value), 1, (0, 0, 0))
-            cell_rectangle = cell_content.get_rect(center=(x, y))
-            self.screen.blit(cell_content, cell_rectangle)
-        if self.sketch_value != 0:
-            self.font = pygame.font.Font(None, 20)
-            cell_content = self.font.render(str(self.sketch_value), 1, (128, 128, 128))
-            cell_rectangle = cell_content.get_rect(center=(x - 0.25 * self.width, y - 0.25 * self.height))
-            self.screen.blit(cell_content, cell_rectangle)
-
-
-class Board:
-    def __init__(self, width, height, screen, difficulty):
-        self.width = width
-        self.height = height
-        self.screen = screen
-        self.difficulty = difficulty
-        self.board = SudokuGenerator()
-        self.grid = [[Cell(0, i, j, screen) for j in range(9)] for i in range(9)]
-        #self.selected_cell = None
-        #self.selected.
-
-    def draw(self):
-        cell_size = 60
-
-'''
 class SudokuGenerator:
     '''
 	create a sudoku board - initialize class variables and set up the 2D board
