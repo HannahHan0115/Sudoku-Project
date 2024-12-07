@@ -273,6 +273,7 @@ def main():
                                     pygame.display.update()
                                     continue
 
+
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if reset_button_rect.collidepoint(event.pos):
                             #print('reset')
