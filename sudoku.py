@@ -174,14 +174,14 @@ def main():
                             #print(ans_board)
                             stage = 1#enter the actual game screen
                         if medium_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            ans_board, board = sudoku_generator.generate_sudoku(9, 40)
+                            ans_board, board = generate_sudoku(9, 40)
                             ifresetboard = [[0 for _ in range(9)] for _ in range(9)]
                             for i in range(9):
                                 for j in range(9):
                                     ifresetboard[i][j] = board[i][j]
                             stage=1
                         if hard_button_rect.collidepoint(event.pos):  # Check if clicked inside button
-                            ans_board, board = sudoku_generator.generate_sudoku(9, 50)
+                            ans_board, board = generate_sudoku(9, 50)
                             ifresetboard = [[0 for _ in range(9)] for _ in range(9)]
                             for i in range(9):
                                 for j in range(9):
