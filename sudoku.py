@@ -1,8 +1,6 @@
 import pygame
 import sudoku_generator
 from sudoku_generator import SudokuGenerator
-import Cell
-import Board
 
 def draw_start_screen(screen):
     screen.fill("white")
@@ -40,7 +38,7 @@ def draw_start_screen(screen):
     hard_surface_rectangle = hard_surface.get_rect(center=(720/4*3, 800/2))
     screen.blit(hard_surface, hard_surface_rectangle)
 
-def draw_board(screen, board, sb): #assumes that the board is (720, 800)
+def draw_board(screen, board): #assumes that the board is (720, 800)
     screen.fill("light yellow")
     for row in range(0, 10):
         if row % 3 == 0:
@@ -82,14 +80,6 @@ def draw_board(screen, board, sb): #assumes that the board is (720, 800)
                 value_font = pygame.font.Font(None, 50)
                 value_surface = value_font.render(str(board[i][j]), True, "Black")
                 value_rectangle = value_surface.get_rect(center=(40+i*80, 40+j*80))
-                screen.blit(value_surface, value_rectangle)
-
-    for i in range(9):
-        for j in range(9):
-            if sb[i][j] != 0:
-                value_font = pygame.font.Font(None, 25)
-                value_surface = value_font.render(str(sb[i][j]), True, "grey")
-                value_rectangle = value_surface.get_rect(center=(10 + i * 80, 10 + j * 80))
                 screen.blit(value_surface, value_rectangle)
 
 def draw_win_screen(screen):
@@ -156,7 +146,6 @@ def main():
         #draw_lose_screen(screen)
         selected_c=75
         selected_r=75
-        sb=[[0 for _ in range(9)] for _ in range(9)]
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -190,52 +179,88 @@ def main():
                 if stage==1:
                     if selected_r!=75:
                         draw_outline(selected_r, selected_c, screen)
-                    draw_board(screen, board,sb)
+                    draw_board(screen, board)
                     #pygame.display.update()
                     if selected_c!=75:
                         if event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_LEFT and selected_r != 0:
+                            if event.key == pygame.K_LEFT:
                                 selected_r=selected_r-1
                                 pygame.display.update()
                                 continue
-                            if event.key == pygame.K_RIGHT and selected_r != 8:
+                            if event.key == pygame.K_RIGHT:
                                 selected_r=selected_r+1
                                 pygame.display.update()
                                 continue
-                            if event.key == pygame.K_UP and selected_c != 0:
+                            if event.key == pygame.K_UP:
                                 selected_c=selected_c-1
                                 pygame.display.update()
                                 continue
-                            if event.key == pygame.K_DOWN and selected_c != 8:
+                            if event.key == pygame.K_DOWN:
                                 selected_c=selected_c+1
                                 pygame.display.update()
                                 continue
                             if event.key == pygame.K_1 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c]=1
+                                board[selected_r][selected_c]=1
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_2 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 2
+                                board[selected_r][selected_c]=2
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_3 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 3
+                                board[selected_r][selected_c]=3
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_4 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 4
+                                board[selected_r][selected_c]=4
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_5 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 5
+                                board[selected_r][selected_c]=5
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_6 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 6
+                                board[selected_r][selected_c]=6
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_7 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 7
+                                board[selected_r][selected_c]=7
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_8 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 8
+                                board[selected_r][selected_c]=8
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_9 and board[selected_r][selected_c] == 0:
-                                sb[selected_r][selected_c] = 9
+                                board[selected_r][selected_c]=9
+                                value_font = pygame.font.Font(None, 25)
+                                value_surface = value_font.render(str(board[selected_r][selected_c]), True, "red")
+                                value_rectangle = value_surface.get_rect(center=(selected_r*80+40, selected_c*80+40))
+                                screen.blit(value_surface, value_rectangle)
                                 pygame.display.update()
                             if event.key == pygame.K_RETURN:
                                 if board[selected_r][selected_c] != 0:
@@ -245,21 +270,8 @@ def main():
                                         stage = 5
                                     pygame.display.update()
                                     continue
-                                elif sb[selected_r][selected_c] != 0:
-                                    board[selected_r][selected_c] = sb[selected_r][selected_c]
-                                    sb[selected_r][selected_c] = 0
-                                    pygame.display.update()
-                                    continue
 
-                            if event.key == pygame.K_BACKSPACE and ifresetboard[selected_r][selected_c] == 0 and board[selected_r][selected_c] != 0:
-                                pygame.draw.rect(screen, "Light yellow", (selected_r*80, selected_c*80, 80, 80))
-                                board[selected_r][selected_c] = 0
-                                pygame.display.update()
 
-                            if event.key == pygame.K_BACKSPACE and ifresetboard[selected_r][selected_c] == 0 and sb[selected_r][selected_c] != 0:
-                                pygame.draw.rect(screen, "Light yellow", (selected_r*80, selected_c*80, 80, 80))
-                                sb[selected_r][selected_c] = 0
-                                pygame.display.update()
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if reset_button_rect.collidepoint(event.pos):
                             #print('reset')
